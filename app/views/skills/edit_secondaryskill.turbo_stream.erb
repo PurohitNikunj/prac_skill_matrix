@@ -1,0 +1,3 @@
+<%= turbo_stream.update @secondary_skill_target do %>
+  <%= options_from_collection_for_select(@secondary_skill_set, :id, :skill) %>  
+<% end %>

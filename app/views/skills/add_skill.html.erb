@@ -1,0 +1,50 @@
+<%= form_with model: @user_skill, url: add_skill_path, method: :post do |f| %>
+  
+  <div class="field">
+    <%= f.label :Team_Manager %>
+    <%= f.text_field :team_manager, value: @team_manager.email, class: "disable" %>
+  </div>
+
+  <div data-controller="primarystack">
+    <div class="field">
+      <%= f.label :Primary_Stack %>
+      <%= f.collection_select :Primary_Stack, TechStack.all, :id, :tech_stack, {},  data: { action: 'change->primarystack#change' } %>
+    </div>
+
+    <div class="field">
+      <%= f.label :Primary_Skill %>
+      <%= select_tag(:primary_skill, [], id: "primary_skill", data: { primarystack_target: "skill_set"} ) %>
+    </div>
+
+    <div data-controller="secondarystack">
+      <div class="field">
+        <%= f.label :Secondary_Stack %>
+        <%= select_tag(:Secondary_Stack, [], data: { action: 'change->secondarystack#change', primarystack_target: "stack_set"} ) %>
+      </div>
+
+      <div class="field">
+        <%= f.label :Secondary_Skill %>
+        <%= select_tag(:secondary_skill, [], id: "secondary_skill", data: { secondarystack_target: "secondary_skill_set", primarystack_target: "second_skill_change"} ) %>
+      </div>
+  
+    </div>
+
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Add Skill", id: "btn" %>
+  </div>
+<% end %>
+
+<%# <script type="text/javascript">
+   async function primary_stack() {
+    const stack_id = document.getElementById("primary_stack_select").value;
+    const skill_set = await fetch(`/skill_set?stackId=${stack_id}`, {
+     method: 'GET',
+     headers: {
+       'Content-Type': 'application/json',
+     },
+   });
+   console.log(skill_set.json());
+  }
+</script> %>
